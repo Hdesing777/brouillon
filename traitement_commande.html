@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmation de votre Commande</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Styles CSS spécifiques à la page de confirmation (en plus de style.css) */
+    body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 30px; }
+    .ticket-container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
+    .ticket-container h1 { color: #e60000; margin-bottom: 20px; }
+    .congratulations { font-size: 18px; color: #555; margin-bottom: 30px; }
+    .ticket { background-color: #f9f9f9; border: 1px dashed #ccc; padding: 20px; margin-bottom: 30px; border-radius: 8px; }
+    .ticket h2 { font-size: 24px; color: #333; margin-bottom: 10px; }
+    .ticket p { font-size: 16px; color: #666; margin-bottom: 5px; }
+    .contact-options { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+    .contact-options p { font-size: 16px; color: #555; margin-bottom: 10px; }
+    .contact-options a, .contact-options span { padding: 10px 20px; border: 1px solid #ccc; border-radius: 5px; text-decoration: none; color: #333; background-color: #eee; }
+    .contact-options a:hover { background-color: #ddd; }
+    .copy-button {
+      background: #007bff; color: white; padding: 10px 20px;
+      border: none; border-radius: 5px; cursor: pointer;
+      font-size: 16px; margin-top: 10px;
+    }
+    .copy-button:hover { background: #0056b3; }
+    .guide { text-align: left; margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 8px; background-color: #f9f9f9; }
+    .guide h3 { font-size: 18px; color: #333; margin-bottom: 10px; }
+    .guide ol { list-style-type: decimal; padding-left: 20px; font-size: 16px; color: #555; }
+    .guide li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="real-time-clock" id="madagascar-time"></div>
+  <div class="cloud-background"></div>
+  <div class="ticket-container">
+    <h1>Félicitations pour votre commande !</h1>
+    <p class="congratulations">Votre commande a été enregistrée avec succès. Veuillez utiliser le ticket unique ci-dessous pour la récupérer ou la suivre auprès de votre commercial Airtel.</p>
+    <div class="ticket">
+      <h2>Votre Ticket de Commande</h2>
+      <p><strong>Numéro de Ticket :</strong> <span id="ticket-number">[NUMÉRO_UNIQUE_DE_COMMANDE]</span></p>
+      <p>Merci pour votre achat !</p>
+    </div>
+    <div class="contact-options">
+      <p>Choisissez comment partager votre ticket avec le commercial Airtel :</p>
+      <button class="copy-button" onclick="copyTicket()">Copier le Ticket</button>
+      <a href="https://wa.me/+261334816838?text=Bonjour,%20voici%20mon%20ticket%20de%20commande%20:%20[NUMÉRO_UNIQUE_DE_COMMANDE]" target="_blank">WhatsApp</a>
+      <span>SMS (vous devrez envoyer un SMS manuellement)</span>
+      <a href="mailto:metyandrana86@gmail.com?subject=Nouveau%20ticket%20de%20commande&body=Bonjour,%20voici%20mon%20ticket%20de%20commande%20:%20[NUMÉRO_UNIQUE_DE_COMMANDE]">Email</a>
+    </div>
+
+    <div class="guide">
+      <h3>Comment contacter le commercial Airtel :</h3>
+      <ol>
+        <li>Cliquez sur le bouton "Copier le Ticket" ou sélectionnez et copiez le numéro de ticket affiché.</li>
+        <li>Choisissez l'une des options de communication ci-dessus (WhatsApp, SMS ou Email).</li>
+        <li>Collez le numéro de ticket dans votre message et envoyez-le au commercial Airtel.</li>
+        <li>Le commercial vérifiera votre commande et vous contactera pour la suite (livraison ou retrait).</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function generateUniqueTicket() {
+      const timestamp = Date.now().toString(36);
+      const randomString = Math.random().toString(36).substring(2, 8);
+      return `AIRTEL-${timestamp}-${randomString.toUpperCase()}`;
+    }
+
+    function copyTicket() {
+      const ticketNumberElement = document.getElementById('ticket-number');
+      const ticketNumber = ticketNumberElement.textContent;
+      navigator.clipboard.writeText(ticketNumber).then(() => {
+        alert("Ticket copié dans le presse-papier !");
+      }).catch(err => {
+        console.error('Erreur lors de la copie du ticket: ', err);
+        alert("Impossible de copier le ticket. Veuillez le sélectionner et le copier manuellement.");
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const ticketNumberElement = document.getElementById('ticket-number');
+      ticketNumberElement.textContent = generateUniqueTicket();
+      // Mettre à jour les liens WhatsApp et Email avec le numéro de ticket généré
+      const ticket = ticketNumberElement.textContent;
+      const whatsappLink = document.querySelector('.contact-options a[href^="https://wa.me"]');
+      if (whatsappLink) {
+        whatsappLink.href = whatsappLink.href.replace('[NUMÉRO_UNIQUE_DE_COMMANDE]', ticket);
+      }
+      const emailLink = document.querySelector('.contact-options a[href^="mailto:"]');
+      if (emailLink) {
+        emailLink.href = emailLink.href.replace('[NUMÉRO_UNIQUE_DE_COMMANDE]', ticket);
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

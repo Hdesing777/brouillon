@@ -1,0 +1,93 @@
+/* Styles CSS globaux pour le site avec effets */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #f5f7fa;
+  color: #333;
+  position: relative; /* Pour positionner les nuages */
+  overflow-x: hidden; /* Empêche la barre de défilement horizontale */
+}
+
+/* Heure en temps réel */
+.real-time-clock {
+  position: fixed; /* Reste en haut même si on défile */
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #555;
+  z-index: 1000; /* Pour être au-dessus des autres éléments */
+}
+
+header {
+  background: linear-gradient(to right, #e60000, #a80000);
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10; /* Pour être au-dessus des nuages */
+  position: relative;
+}
+header .logo { font-size: 28px; font-weight: bold; }
+nav a { color: white; margin-left: 20px; text-decoration: none; font-weight: 500; }
+.hero-home { background-color: #f9f9f9; padding: 80px 40px; text-align: center; position: relative; z-index: 10; }
+.hero-home h1 { font-size: 36px; margin-bottom: 20px; color: #e60000; }
+.hero-home img { max-width: 300px; height: auto; margin-bottom: 30px; }
+.bonus-info { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 30px; position: relative; z-index: 10; }
+.bonus-info p { font-size: 18px; color: #555; }
+.visual-design { text-align: center; padding: 40px 40px; position: relative; z-index: 10; }
+.visual-design img { max-width: 80%; height: auto; border-radius: 10px; }
+.product-selection { padding: 60px 40px; text-align: center; position: relative; z-index: 10; }
+.product-selection h2 { font-size: 28px; margin-bottom: 30px; }
+.product-list { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; }
+.product-item {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+  width: calc(50% - 15px);
+  border-bottom: 3px solid gold; /* Touche or */
+}
+.product-item img { max-width: 100%; height: auto; border-radius: 10px; margin-bottom: 15px; }
+.product-item h3 { margin-bottom: 10px; font-size: 20px; }
+.product-item .price { color: #e60000; font-weight: bold; font-size: 18px; margin-bottom: 10px; }
+.product-item .about { color: #777; font-size: 14px; margin-bottom: 10px; text-align: left; }
+.product-item .advantages { text-align: left; margin-bottom: 15px; }
+.product-item .advantages ul { list-style-type: disc; padding-left: 20px; font-size: 14px; color: #555; }
+.product-item .commander-btn {
+  background: #e60000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+.product-item .commander-btn:hover {
+  background-color: #a80000; /* Assombrissement au survol */
+}
+footer { background: #222; color: #aaa; text-align: center; padding: 20px; font-size: 14px; position: relative; z-index: 10; }
+
+/* Animation de nuages */
+.cloud-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%; /* Plus large que la fenêtre pour l'effet de défilement continu */
+  height: 100%;
+  background: url('cloud-pattern.png') repeat-x; /* Remplacez par votre motif de nuages */
+  opacity: 0.3; /* Rendre les nuages subtils */
+  animation: moveClouds 15s linear infinite; /* Animation lente et continue */
+  z-index: 1; /* Placer les nuages en arrière-plan */
+}
+
+@keyframes moveClouds {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}

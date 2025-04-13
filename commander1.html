@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commander votre Box Airtel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Styles CSS spécifiques à la page de commande (en plus de style.css) */
+    .order-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 90%; max-width: 600px; }
+    .order-container h1 { text-align: center; color: #e60000; margin-bottom: 20px; }
+    .product-info { text-align: center; margin-bottom: 20px; }
+    .product-info img { max-width: 200px; height: auto; border-radius: 10px; margin-bottom: 10px; }
+    .product-info p { font-size: 16px; color: #555; }
+    form { display: flex; flex-direction: column; gap: 15px; }
+    input[type="text"], input[type="tel"] { padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; }
+    button[type="submit"] {
+      background: #e60000; color: white; padding: 15px 25px;
+      border: none; border-radius: 30px; font-weight: bold; cursor: pointer;
+      font-size: 18px; transition: 0.3s;
+    }
+    button[type="submit"]:hover { background: #a80000; }
+    .delivery-options { display: flex; gap: 15px; margin-bottom: 15px; }
+    .delivery-options label { font-size: 16px; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="real-time-clock" id="madagascar-time"></div>
+  <div class="cloud-background"></div>
+  <div class="order-container">
+    <h1>Votre Commande de Box Airtel</h1>
+    <div class="product-info">
+      <img id="product-image" src="" alt="Image du Box">
+      <p id="product-name"></p>
+      <p id="product-price"></p>
+    </div>
+    <form action="https://formsubmit.co/metyandrana86@gmail.com" method="POST" id="order-form">
+      <input type="text" name="nom" placeholder="Nom complet" required>
+      <input type="tel" name="numero" placeholder="Téléphone" required>
+      <input type="text" name="produit" id="product-input" value="" readonly>
+      <input type="text" name="prix" id="price-input" value="" readonly>
+      <input type="text" name="numeroMobileMoney" placeholder="Numéro Mobile Money" required>
+      <label for="adresse_livraison">Adresse de livraison :</label>
+      <input type="text" name="adresse_livraison" id="adresse_livraison" placeholder="Votre adresse complète">
+      <div class="delivery-options">
+        <input type="checkbox" id="retrait_point_vente" name="retrait_point_vente" value="oui">
+        <label for="retrait_point_vente">Je récupère ma commande au point de vente</label>
+      </div>
+      <button type="submit">Commander</button>
+    </form>
+  </div>
+
+  <script>
+    // Récupérer les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productName = urlParams.get('nom');
+    const productPrice = urlParams.get('prix');
+    const productId = urlParams.get('produit');
+
+    // Mettre à jour les informations sur la page
+    document.getElementById('product-name').textContent = productName;
+    document.getElementById('product-price').textContent = "Prix : " + productPrice + " Ar";
+    document.getElementById('product-input').value = productName;
+    document.getElementById('price-input').value = productPrice;
+
+    // Afficher une image par défaut (vous devrez adapter cela)
+    let productImage = "";
+    if (productId === 'box1') {
+      productImage = "imagefx.jpg";
+    } else if (productId === 'box2') {
+      productImage = "imagefx.jpg";
+    }
+    document.getElementById('product-image').src = productImage;
+    document.getElementById('product-image').alt = productName;
+
+    // Gérer l'affichage de l'adresse de livraison
+    const retraitCheckbox = document.getElementById('retrait_point_vente');
+    const adresseLivraisonInput = document.getElementById('adresse_livraison');
+
+    retraitCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        adresseLivraisonInput.disabled = true;
+        adresseLivraisonInput.value = "";
+      } else {
+        adresseLivraisonInput.disabled = false;
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
